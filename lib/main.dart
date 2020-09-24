@@ -1,7 +1,32 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hololive_app/holo_repository.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
+
+  final holoRepository = HoloRepository();
+  holoRepository.getStreamList();
+}
+
+class _InitializeApp extends StatelessWidget {
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: _initialization,
+      builder: (BuildContext context, AsyncSnapshot<FirebaseApp> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return MyApp();
+        }
+
+        return CircularProgressIndicator();
+      },
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
