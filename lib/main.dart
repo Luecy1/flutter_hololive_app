@@ -5,10 +5,8 @@ import 'package:flutter_hololive_app/holo_repository.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
 
-  final holoRepository = HoloRepository();
-  holoRepository.getStreamList();
+  runApp(MyApp());
 }
 
 class _InitializeApp extends StatelessWidget {
@@ -55,9 +53,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
+  void _incrementCounter() async {
+    final holoRepository = HoloRepository();
+    holoRepository.getStreamList().listen((event) {
+      print(event.title);
     });
   }
 
