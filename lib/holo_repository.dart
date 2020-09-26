@@ -6,22 +6,17 @@ class HoloRepository {
   final _firebase = FirebaseDatabase.instance;
 
   Stream<StreamItem> getStreamList() {
-    // final snapshot = await _firebase.reference().child("youtube_data/yukihanalamy/0").once();
+    return _firebase.reference().child("youtube_data/yukihanalamy").onChildAdded.map((event) {
+      print(event.snapshot.value["title"]);
+      return StreamItem(event.snapshot.value["title"]);
+    });
+  }
 
-    // final controller = StreamController<Liver>();
-    //
-    // _firebase.reference().child("youtube_data/yukihanalamy").onChildAdded.forEach((element) {
-    //   controller.sink.add(Liver(
-    //     "yukihanalamy",
-    //     [StreamItem(element.snapshot.value["title"])],
-    //   ));
-    // });
+  Future<List<StreamItem>> getOnce() async {
+    final ref = await _firebase.reference().child("youtube_data/yukihanalamy").once();
 
-    return _firebase
-        .reference()
-        .child("youtube_data/yukihanalamy")
-        .onChildAdded
-        .map((event) => StreamItem(event.snapshot.value["title"]));
+    final dynamicList = (ref.value as List<dynamic>);
+    return dynamicList.map((e) => StreamItem(e["title"])).toList();
   }
 }
 
