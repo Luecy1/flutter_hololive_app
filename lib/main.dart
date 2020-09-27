@@ -30,7 +30,7 @@ class _MyHomePage extends StatelessWidget {
         title: Text('Flutter Demo Home Page'),
       ),
       body: FutureBuilder(
-        future: HoloRepository().getOnce(),
+        future: HoloRepository().getStreamList("yukihanalamy"),
         builder: (context, AsyncSnapshot<List<StreamItem>> snapshot) {
           if (snapshot.hasData) {
             return buildBody(snapshot.data);
@@ -47,9 +47,26 @@ class _MyHomePage extends StatelessWidget {
       itemCount: streamList.length,
       itemBuilder: (context, index) {
         final item = streamList[index];
-        return ListTile(
-          title: Text(item.title),
-          subtitle: Text(item.description),
+        return Card(
+          margin: EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Image.network(item.thumbnailDefault),
+              Expanded(
+                  child: Column(
+                children: [
+                  Text(
+                    item.title,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  Text(
+                    item.description,
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                ],
+              )),
+            ],
+          ),
         );
       },
     );

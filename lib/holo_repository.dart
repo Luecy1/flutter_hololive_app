@@ -5,19 +5,26 @@ import 'package:firebase_database/firebase_database.dart';
 class HoloRepository {
   final _firebase = FirebaseDatabase.instance;
 
-  Future<List<StreamItem>> getOnce() async {
-    final ref = await _firebase.reference().child("youtube_data/yukihanalamy").once();
+  Future<List<StreamItem>> getStreamList(String liver) async {
+    final ref = await _firebase.reference().child("youtube_data/" + liver).once();
 
     final dynamicList = (ref.value as List<dynamic>);
     return dynamicList.map((e) => StreamItem.fromDynamic(e)).toList();
+  }
+
+  Future<List<Liver>> getLiverList() async {
+    final ref = await _firebase.reference().child("youtube_data").once();
+
+    final livers = ref.value as Map<dynamic, dynamic>;
+
+    return livers.keys.map((e) => Liver(e.toString()));
   }
 }
 
 class Liver {
   final String liverName;
-  final List<StreamItem> steamList;
 
-  Liver(this.liverName, this.steamList);
+  Liver(this.liverName);
 }
 
 class StreamItem {

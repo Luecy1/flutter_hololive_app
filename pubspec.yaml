@@ -16,6 +16,9 @@ dependencies:
   firebase_core: "0.5.0"
   firebase_database: "^4.0.0"
 
+  timetable: ^0.2.8
+  time_machine: ^0.9.13
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
