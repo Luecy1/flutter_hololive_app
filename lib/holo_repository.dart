@@ -5,18 +5,11 @@ import 'package:firebase_database/firebase_database.dart';
 class HoloRepository {
   final _firebase = FirebaseDatabase.instance;
 
-  Stream<StreamItem> getStreamList() {
-    return _firebase.reference().child("youtube_data/yukihanalamy").onChildAdded.map((event) {
-      print(event.snapshot.value["title"]);
-      return StreamItem(event.snapshot.value["title"]);
-    });
-  }
-
   Future<List<StreamItem>> getOnce() async {
     final ref = await _firebase.reference().child("youtube_data/yukihanalamy").once();
 
     final dynamicList = (ref.value as List<dynamic>);
-    return dynamicList.map((e) => StreamItem(e["title"])).toList();
+    return dynamicList.map((e) => StreamItem.fromDynamic(e)).toList();
   }
 }
 
@@ -28,7 +21,52 @@ class Liver {
 }
 
 class StreamItem {
+  final String videoId;
+  final String publishedAt;
+  final String channelId;
   final String title;
+  final String description;
+  final String thumbnailDefault;
+  final String thumbnailMedium;
+  final String thumbnailHigh;
+  final String liveBroadcastContent;
+  final String publishTime;
+  final String actualStartTime;
+  final String actualEndTime;
+  final String scheduledStartTime;
 
-  StreamItem(this.title);
+  StreamItem(
+      this.videoId,
+      this.publishedAt,
+      this.channelId,
+      this.title,
+      this.description,
+      this.thumbnailDefault,
+      this.thumbnailMedium,
+      this.thumbnailHigh,
+      this.liveBroadcastContent,
+      this.publishTime,
+      this.actualStartTime,
+      this.actualEndTime,
+      this.scheduledStartTime);
+
+  StreamItem.fromDynamic(dynamic data)
+      : videoId = data["videoId"],
+        publishedAt = data["publishedAt"],
+        channelId = data["channelId"],
+        title = data["title"],
+        description = data["description"],
+        thumbnailDefault = data["thumbnailDefault"],
+        thumbnailMedium = data["thumbnailMedium"],
+        thumbnailHigh = data["thumbnailHigh"],
+        liveBroadcastContent = data["liveBroadcastContent"],
+        publishTime = data["publishTime"],
+        actualStartTime = data["actualStartTime"],
+        actualEndTime = data["actualEndTime"],
+        scheduledStartTime = data["scheduledStartTime"];
+
+  @override
+  String toString() {
+    return 'StreamItem{videoId: $videoId, publishedAt: $publishedAt, channelId: $channelId, title: $title, description: $description, thumbnailDefault: $thumbnailDefault, thumbnailMedium: $thumbnailMedium, thumbnailHigh: $thumbnailHigh, liveBroadcastContent: $liveBroadcastContent, publishTime: $publishTime, actualStartTime: $actualStartTime, actualEndTime: $actualEndTime, scheduledStartTime: $scheduledStartTime}';
+  }
 }
