@@ -53,18 +53,22 @@ class _MyHomePage extends StatelessWidget {
             children: [
               Image.network(item.thumbnailDefault),
               Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: Column(
-                children: [
-                  Text(
-                    item.title,
-                    style: Theme.of(context).textTheme.bodyText1,
+                    children: [
+                      Text(
+                        item.title,
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      Text(
+                        item.description,
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                    ],
                   ),
-                  Text(
-                    item.description,
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
-                ],
-              )),
+                ),
+              ),
             ],
           ),
         );
