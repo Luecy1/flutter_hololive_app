@@ -51,7 +51,17 @@ class _MyHomePage extends StatelessWidget {
           margin: EdgeInsets.all(8.0),
           child: Row(
             children: [
-              Image.network(item.thumbnailDefault),
+              SizedBox(
+                height: 90,
+                width: 150,
+                child: AspectRatio(
+                  aspectRatio: 16.0 / 9.0,
+                  child: Image.network(
+                    item.thumbnailHigh,
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
+              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
