@@ -13,18 +13,24 @@ class HoloRepository {
   }
 
   Future<List<Liver>> getLiverList() async {
-    final ref = await _firebase.reference().child("youtube_data").once();
+    final ref = await _firebase.reference().child("liver_list").once();
 
     final livers = ref.value as Map<dynamic, dynamic>;
 
-    return livers.keys.map((e) => Liver(e.toString()));
+    return livers.entries.map((e) {
+      final name = e.key as String;
+      final dispName = e.value as String;
+      return Liver(name, dispName);
+    }).toList();
+    // return livers.keys.map((e) => Liver(e.toString())).toList();
   }
 }
 
 class Liver {
   final String liverName;
+  final String diapName;
 
-  Liver(this.liverName);
+  Liver(this.liverName, this.diapName);
 }
 
 class StreamItem {
