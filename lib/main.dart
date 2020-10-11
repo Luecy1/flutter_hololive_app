@@ -49,37 +49,26 @@ class _MyHomePage extends StatelessWidget {
         final item = streamList[index];
         return Card(
           margin: EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              SizedBox(
-                height: 90,
-                width: 150,
-                child: AspectRatio(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                AspectRatio(
                   aspectRatio: 16.0 / 9.0,
                   child: Image.network(
                     item.thumbnailHigh,
                     fit: BoxFit.fitWidth,
                   ),
                 ),
-              ),
-              Expanded(
-                child: Padding(
+                Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Text(
-                        item.title,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      Text(
-                        item.description,
-                        style: Theme.of(context).textTheme.bodyText2,
-                      ),
-                    ],
+                  child: Text(
+                    item.title,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
